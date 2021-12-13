@@ -1,0 +1,63 @@
+<div class="container">
+    <nav>
+        <a class="btn btn-primary" [routerLink]="['../emp-add-edit', 0]"> Add New Employee</a>
+        <form #searchForm="ngForm">
+            <input type="text" ngModel name="search" placeholder="find" #search />
+            <button (click)="getSearch(searchForm.value)">Search</button>
+            <button type="reset" (click)="clear()">clear</button>
+        </form>
+    </nav>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>
+                    Name
+                    <button type="button" (click)="onSort('name')">
+                        <ng-template [ngIf]="ascending" [ngIfElse]="elseBlock"><i class="fa fa-caret-up"
+                                aria-hidden="true"></i>
+                        </ng-template>
+                        <ng-template #elseBlock><i class="fa fa-caret-down" aria-hidden="true"></i></ng-template>
+                    </button>
+                </th>
+                <th>Age
+                    <button type="button" (click)="onSort('age')">
+                        <ng-template [ngIf]="ascending" [ngIfElse]="elseBlock"><i class="fa fa-caret-up"
+                                aria-hidden="true"></i>
+                        </ng-template>
+                        <ng-template #elseBlock><i class="fa fa-caret-down" aria-hidden="true"></i></ng-template>
+                    </button>
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees; index as i">
+                <th>{{i+1}}</th>
+                <td>{{employee.name}}</td>
+                <td>{{employee.age}}</td>
+                <td>
+                    <button [routerLink]="['../emp-add-edit', employee.id]">
+                        <img src="../../assets/edit-solid.svg" alt="edit" height="20px" />
+                    </button> |
+                    <button (click)="delete(employee.id)">
+                        <img src="../../assets/trash-solid.svg" alt="delete" height="20px" />
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="center">
+        <div class="pagination">
+            <a class="btn btn-outline-secondary" (click)="changePage('prev')">&laquo;</a>
+            <a aria-disabled="false">{{_state.page}}</a>
+            <a class="btn btn-outline-secondary" (click)="changePage('next')">&raquo;</a>
+        </div>
+        <select class="custom-select" #select (change)="changePageSize(select.value)">
+            <option value="none" selected disabled hidden>{{_state.pageSize}} items per page</option>
+            <option value="2">2 items per page</option>
+            <option value="4">4 items per page</option>
+            <option value="6">6 items per page</option>
+        </select>
+    </div>
+    <router-outlet></router-outlet>

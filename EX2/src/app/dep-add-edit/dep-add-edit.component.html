@@ -1,0 +1,22 @@
+<div class="container">
+    <h2>Add or Edit the Department</h2>
+    <form #addForm="ngForm">
+        <div class="row">
+            <div class="col">
+                <input type="text" [(ngModel)]="name" class="form-control" placeholder="Department Name" name="name"
+                    required />
+            </div>
+            <div class="col">
+                <button type="button" routerLink="/emp-listing" class="btn btn-info">
+                    Back
+                </button>
+                <button type="reset" class="btn btn-info">
+                    Clear
+                </button>
+                <button type="submit" (click)="onSubmit(id, addForm.value)" class="btn btn-primary">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
